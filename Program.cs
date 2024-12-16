@@ -75,4 +75,20 @@
       Console.WriteLine("Payment Credit Card");
     }
   }
+
+  // private, protected, internal and public
+  public class ModificadoresDeAcesso //internal fica disponivel dentro do mesmo namespace
+  {
+    public string valorPublico = string.Empty; //aberto a todos
+    private string? valorPrivado; //privado somente a classe
+    protected int valorProtected; //aberto para classes filhas que herdam a classe pai
+  }
+
+  public class Acesso : ModificadoresDeAcesso
+  {
+    void Teste()
+    {
+      base.valorProtected = 1;
+    }
+  }
 }
