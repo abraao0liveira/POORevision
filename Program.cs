@@ -88,7 +88,35 @@
   {
     void Teste()
     {
-      base.valorProtected = 1;
+      base.valorProtected = 1; //atribuindo um valor a uma variavel protected da classe pai
     }
+  }
+
+  //Tipos complexos
+  public class Pagamento
+  {
+    Adress? BillingAddres; //variavel de tipo complexo
+    public DateTime Vencimento { get; set; } //Propriedade (prop)
+    private DateTime _dataPagamento; //(propFull) - variavel privada comeca com "_"
+    public DateTime DataPagamento //(propFull)
+    {
+      //possiblidade de add logicas aos metodos get e set, como um Console.WriteLine(), por exemplo
+      get
+      {
+        Console.WriteLine("Lendo um valor."); //add
+        return _dataPagamento.AddDays(1);
+      }
+      set { _dataPagamento = value; }
+    }
+    public int Propg { get; private set; }  //(propg) Aberta apenas para leitura, mas sem a possibilidade de setar um valor a ela
+
+    void Pagar()
+    {
+
+    }
+  }
+  public class Adress
+  {
+    string ZipCode = string.Empty;
   }
 }
