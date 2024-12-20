@@ -109,14 +109,32 @@
       set { _dataPagamento = value; }
     }
     public int Propg { get; private set; }  //(propg) Aberta apenas para leitura, mas sem a possibilidade de setar um valor a ela
-
-    void Pagar()
-    {
-
-    }
   }
   public class Adress
   {
     string ZipCode = string.Empty;
+  }
+
+  //Metodos
+  public class Metodos
+  {
+    //Sobrecarga de métodos
+    public void Pagar(string numero) { }
+    public void Pagar(string numero, DateTime vencimento) { }
+    public void Pagar(string numero, DateTime vencimento, bool pagarPosVencimento = false) { }
+
+    //Sobreescrever métodos
+    public virtual void PagarSob(string text)
+    {
+      Console.WriteLine("Pagar");
+    } //metodo com a possibilidade de ser sobrescrito
+  }
+
+  public class MetodosSob : Metodos
+  {
+    public override void PagarSob(string text)
+    {
+      Console.WriteLine("Pagar Sobrescrito");
+    } //metodo sobrescrito
   }
 }
