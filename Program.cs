@@ -118,6 +118,18 @@
   //Metodos
   public class Metodos
   {
+    public DateTime DataPagamento { get; set; }
+
+    //metodo construtor
+
+    //public Metodos() { } 
+    //construtor paramiteriz, sem parametros, para o filho poder acessar o construtor sem parametros obrigatórios
+    public Metodos(DateTime vencimento) //ctor
+    {
+      Console.WriteLine("Construtor");
+      DataPagamento = DateTime.Now;
+    }
+
     //Sobrecarga de métodos
     public void Pagar(string numero) { }
     public void Pagar(string numero, DateTime vencimento) { }
@@ -132,6 +144,10 @@
 
   public class MetodosSob : Metodos
   {
+    //metodo construtor com parametros obrigatorios do pai
+    public MetodosSob(DateTime vencimento) : base(vencimento)
+    {
+    }
     public override void PagarSob(string text)
     {
       Console.WriteLine("Pagar Sobrescrito");
