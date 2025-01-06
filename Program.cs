@@ -19,6 +19,17 @@
       payment.ToString();
 
       Console.WriteLine("Hello World!");
+
+      //using and dispose
+      var construtor = new Construtor();
+      construtor.Dispose(); //dispose é chamado para liberar recursos não gerenciados
+      using (var construtor2 = new Construtor())
+      {
+        Console.WriteLine("Using");
+      } //dispose é chamado automaticamente
+
+      //Classe estática
+      Setttings.API_URL = "http://localhost:5050";
     }
   }
 
@@ -142,15 +153,36 @@
     } //metodo com a possibilidade de ser sobrescrito
   }
 
-  public class MetodosSob : Metodos
+  public class MetodoSob : Metodos
   {
     //metodo construtor com parametros obrigatorios do pai
-    public MetodosSob(DateTime vencimento) : base(vencimento)
+    public MetodoSob(DateTime vencimento) : base(vencimento)
     {
     }
     public override void PagarSob(string text)
     {
       Console.WriteLine("Pagar Sobrescrito");
     } //metodo sobrescrito
+  }
+
+  //Using and Dispose
+  public class Construtor : IDisposable
+  {
+    public Construtor()
+    {
+      var construtor = new Construtor();
+      Console.WriteLine("Construtor");
+    }
+
+    public void Dispose()
+    {
+      Console.WriteLine("Finalizador");
+    }
+  }
+
+  //Classe estática
+  public static class Setttings
+  {
+    public static string API_URL { get; set; } = string.Empty;
   }
 }
