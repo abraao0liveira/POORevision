@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\abraa\\OneDrive\\Documentos\\Projects\\POORevision\\POORevision.csproj": {}
+    "C:\\Users\\abraa\\OneDrive\\Documentos\\Projects\\.Net\\POORevision\\POORevision.csproj": {}
   },
   "projects": {
-    "C:\\Users\\abraa\\OneDrive\\Documentos\\Projects\\POORevision\\POORevision.csproj": {
+    "C:\\Users\\abraa\\OneDrive\\Documentos\\Projects\\.Net\\POORevision\\POORevision.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\abraa\\OneDrive\\Documentos\\Projects\\POORevision\\POORevision.csproj",
+        "projectUniqueName": "C:\\Users\\abraa\\OneDrive\\Documentos\\Projects\\.Net\\POORevision\\POORevision.csproj",
         "projectName": "POORevision",
-        "projectPath": "C:\\Users\\abraa\\OneDrive\\Documentos\\Projects\\POORevision\\POORevision.csproj",
+        "projectPath": "C:\\Users\\abraa\\OneDrive\\Documentos\\Projects\\.Net\\POORevision\\POORevision.csproj",
         "packagesPath": "C:\\Users\\abraa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\abraa\\OneDrive\\Documentos\\Projects\\POORevision\\obj\\",
+        "outputPath": "C:\\Users\\abraa\\OneDrive\\Documentos\\Projects\\.Net\\POORevision\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\abraa\\AppData\\Roaming\\NuGet\\NuGet.Config"
