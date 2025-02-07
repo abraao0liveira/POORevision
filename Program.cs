@@ -1,7 +1,13 @@
-﻿namespace POORevision
-{
+﻿using System.Diagnostics;
+
+namespace POORevision;
   class Program
   {
+    //Delegates
+    static void RealizarTest(double valor) //uma function que aponta para outra function
+    {
+      Console.WriteLine($"valor pago: {valor}.");
+    }
     static void Main(string[] args)
     {
       var paymentBoleto = new PaymentBoleto();
@@ -30,6 +36,30 @@
 
       //Classe estática
       Setttings.API_URL = "http://localhost:5050";
+      
+      //Instanciando Classe Parcial
+      var payments = new Payments();
+      payments.PropriedadeOne = 1; //de Payments
+      payments.PropriedadeTwo = 2; //de CreditCardPayment
+      
+      //Upcast and Downcast
+      var pessoa = new Pessoa(1,"");
+      pessoa = new PessoaFisica(1,""); //da classe filha para a classe pai (up)
+      
+      var person = new Pessoa(1,"");
+      var pessoaJuridica = new PessoaJuridica(1,"");
+      pessoaJuridica = (PessoaJuridica)person; //da classe pai para a classe filha (down)
+      
+      //Comparando objetos
+      var pessoaA = new Pessoa(2,"TESTE");
+      var pessoaB = new Pessoa(2,"TESTE");
+      
+      Console.WriteLine(pessoaA == pessoaB); //false, pois retornam os endereços
+      Console.WriteLine(pessoaA.Equals(pessoaB)); //true
+      
+      //Delegates
+      var testDelegate = new TestDelegate.Test(RealizarTest); //estou delegando a function
+      testDelegate(25);
     }
   }
 
@@ -185,4 +215,84 @@
   {
     public static string API_URL { get; set; } = string.Empty;
   }
-}
+  
+  //Classe Selada 
+  public sealed class ClasseSelada //classe que não pode ser herdada por outra
+  {
+    public string teste { get; set; } = string.Empty;
+  }
+  
+  //A Interface, contrato da classe 
+  public abstract class TestPayment : IPayment //classe deve seguir tudo que a 'interface' pede.
+  { //Uma classe 'abstract' não pode ser instanciada
+    public DateTime DateExpiration { get; set; }
+
+    public virtual void Pay(double value)
+    {
+    }
+  }
+
+  public class TestPaymentCreditCard : TestPayment
+  {
+    public override void Pay(double value)
+    {
+      base.Pay(value);
+    }
+  }
+
+  public class TestPaymentBoleto : TestPayment
+  {
+    public override void Pay(double value)
+    {
+      base.Pay(value);
+    }
+  }
+
+  public interface IPayment
+  {
+    //posso criar a minha propriedade, métodos e eventos
+    DateTime DateExpiration { get; set; }
+    
+    void Pay(double value);
+  }
+//'Interface' é um contrato que define o que tem que ser feito, e a 'abstract' tem uma implementação base do que deve ser feito.
+
+  //Up and Down
+  public class Pessoa : IEquatable<Pessoa>
+  {
+    public Pessoa(int id, string nome)
+    {
+      Id = id;
+      Nome = nome;
+    }
+
+    public int Id { get; set; }
+    public string Nome { get; set; } = string.Empty;
+    public bool Equals(Pessoa? pessoa)
+    {
+      return Id == pessoa!.Id;
+    }
+  }
+  public class PessoaFisica : Pessoa
+  {
+    public PessoaFisica(int id, string nome) : base(id, nome)
+    {
+    }
+
+    public string CPF { get; set; } = string.Empty;
+    
+  }
+  public class PessoaJuridica : Pessoa
+  {
+    public PessoaJuridica(int id, string nome) : base(id, nome)
+    {
+    }
+
+    public string CNPJ { get; set; } = string.Empty;
+  }
+  
+  //Delegate
+  public class TestDelegate
+  {
+    public delegate void Test(double valor); //Quem for de fora pode fazer essa função.
+  }
