@@ -60,7 +60,136 @@ namespace POORevision;
       //Delegates
       var testDelegate = new TestDelegate.Test(RealizarTest); //estou delegando a function
       testDelegate(25);
+      
+      //Events
+      var room = new Room(2); //criando uma sala com 2 seats
+      room.RoomSoldOutEvent += OnRoomSoldOut; //estou delegando o método ao evento
+      room.ReserveSeat(); //reservando um seat
+      room.ReserveSeat();
+      room.ReserveSeat();
+      
+      //Tipos genericos
+      var personOne = new Person();
+      var context = new DataContext<IPerson, Subscription>();
+      context.Save(personOne); //Espera o Tipo generico
+      
+      //Listas
+      IEnumerable<TestList> testListOne = new List<TestList>(); //lista de leitura
+      var testLists = new List<TestList>(); //lista com todos os métodos, Add, Remove
+      testLists.Add(new TestList(1)); // add um dado a lista
+      testLists.Add(new TestList(2));
+      testLists.Remove(new TestList(1)); // remove um dado a lista
+
+      foreach (var testList in testLists)
+      {
+        Console.WriteLine(testList.Id);
+      }
+
+      var listOne = testLists.Where(x => x.Id == 1); //busca todos os dados do "id" = 1 na lista
+      var listTwo = testLists.First(x => x.Id == 1); //busca o primeiro dado do "id" = 1 na lista
+      
+      var multipleLists = new List<TestList>();
+      multipleLists.AddRange(testLists); //Espera um IEnumerable, add uma lista dentro de outra
+      
+      //multipleLists.RemoveRange(); //remove lista dentro de lista
+      multipleLists.Clear(); //limpa a lista
+      
+      //percorer todos os dados
+      foreach (var item in testLists.Where(x => x.Id == 2))
+      {
+        Console.WriteLine(item.Id);
+      }
+      
+      var exists = testLists.Any(x => x.Id == 3); //retorna true se o dado existir, ou false se não
+      Console.WriteLine(exists);
+      
+      testLists.RemoveAll(x => x.Id == 3); //remove todos os dados com esse "id"
+
+      var count = testLists.Count(x => x.Id == 3); //conta quantos itens tem na lista
+
+      var enumerable = testLists.Skip(1); //pula um ‘item’ da lista
+      
+      var take1 = testLists.Take(2); //pega 2 itens da lista
+      var take2 = testLists.Skip(1).Take(3);
+      
+      //conversão de listas
+      var asEnumerable = testLists.AsEnumerable(); //convertendo List para IEnumerable
+      var lists = asEnumerable.ToList(); //convertendo de IEnumerable para List
     }
+
+    static void OnRoomSoldOut(object? sender, EventArgs e) // método que vai ser delegado
+    {
+      Console.WriteLine("Room Sold Out");
+    }
+  }
+
+  //Listas
+  public class TestList
+  {
+    public int Id { get; set; }
+
+    public TestList(int id)
+    {
+      Id = id;
+    }
+  }
+  
+  //Events
+  public class Room
+  {
+    public Room(int seats)
+    {
+      Seats = seats;
+      _seatsInUse = 0;
+    }
+
+    private int _seatsInUse = 0;
+    public int Seats { get; set; }
+
+    public void ReserveSeat()
+    {
+      _seatsInUse++;
+      if (_seatsInUse >= Seats)
+      {
+        OnRoomSoldOut(EventArgs.Empty);
+      }
+      else
+      {
+        Console.WriteLine($"Reserving seat {_seatsInUse}");
+      }
+    }
+
+    public event EventHandler? RoomSoldOutEvent; //evento criado, definição, sempre com Event ao final
+
+    protected virtual void
+      OnRoomSoldOut(EventArgs e) //método manipulador, gerencia o evento, sempre começa com 'On', sempre void.
+    {
+      EventHandler? handler = RoomSoldOutEvent;
+      handler?.Invoke(this, e);
+    }
+  }
+
+  //Tipos Genericos
+  public class DataContext<TP, TS> //T de tipo, padrão
+    where TP : IPerson // obriga o tipo generico ser da classe Person
+    where TS : Subscription
+  {
+    public void Save(TP entity)
+    {
+    }
+    public void Save(TS entity)
+    {
+    }
+  }
+
+  public interface IPerson
+  {
+  }
+  public class Person : IPerson
+  {
+  }
+  public class Subscription
+  {
   }
 
   //Encapsulamento
@@ -219,7 +348,7 @@ namespace POORevision;
   //Classe Selada 
   public sealed class ClasseSelada //classe que não pode ser herdada por outra
   {
-    public string teste { get; set; } = string.Empty;
+    public string Teste { get; set; } = string.Empty;
   }
   
   //A Interface, contrato da classe 
